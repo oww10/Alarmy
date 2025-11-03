@@ -7,6 +7,7 @@ class MainViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
+        
     }
 
     private func setupTabs(){
