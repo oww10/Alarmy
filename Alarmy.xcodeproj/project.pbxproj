@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		94A06ABE2EB8809F003F2010 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94A06ABD2EB8809F003F2010 /* SnapKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		94A06A712EB87F10003F2010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94A06A4F2EB87F0F003F2010 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94A06A562EB87F0F003F2010;
+			remoteInfo = Alarmy;
+		};
+		94A06A7B2EB87F11003F2010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94A06A4F2EB87F0F003F2010 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94A06A562EB87F0F003F2010;
+			remoteInfo = Alarmy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		94A06A572EB87F0F003F2010 /* Alarmy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alarmy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94A06A702EB87F10003F2010 /* AlarmyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlarmyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		94A06A7A2EB87F11003F2010 /* AlarmyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlarmyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		94A06A822EB87F11003F2010 /* Exceptions for "Alarmy" folder in "Alarmy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Info.plist,
+			);
+			target = 94A06A562EB87F0F003F2010 /* Alarmy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		94A06A592EB87F0F003F2010 /* Alarmy */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				94A06A822EB87F11003F2010 /* Exceptions for "Alarmy" folder in "Alarmy" target */,
+			);
+			path = Alarmy;
+			sourceTree = "<group>";
+		};
+		94A06A732EB87F10003F2010 /* AlarmyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AlarmyTests;
+			sourceTree = "<group>";
+		};
+		94A06A7D2EB87F11003F2010 /* AlarmyUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AlarmyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94A06A542EB87F0F003F2010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94A06ABE2EB8809F003F2010 /* SnapKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94A06A6D2EB87F10003F2010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94A06A772EB87F11003F2010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94A06A4E2EB87F0F003F2010 = {
+			isa = PBXGroup;
+			children = (
+				94A06A592EB87F0F003F2010 /* Alarmy */,
+				94A06A732EB87F10003F2010 /* AlarmyTests */,
+				94A06A7D2EB87F11003F2010 /* AlarmyUITests */,
+				94A06A582EB87F0F003F2010 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94A06A582EB87F0F003F2010 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94A06A572EB87F0F003F2010 /* Alarmy.app */,
+				94A06A702EB87F10003F2010 /* AlarmyTests.xctest */,
+				94A06A7A2EB87F11003F2010 /* AlarmyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94A06A562EB87F0F003F2010 /* Alarmy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94A06A832EB87F11003F2010 /* Build configuration list for PBXNativeTarget "Alarmy" */;
+			buildPhases = (
+				94A06A532EB87F0F003F2010 /* Sources */,
+				94A06A542EB87F0F003F2010 /* Frameworks */,
+				94A06A552EB87F0F003F2010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				94A06A592EB87F0F003F2010 /* Alarmy */,
+			);
+			name = Alarmy;
+			packageProductDependencies = (
+				94A06ABD2EB8809F003F2010 /* SnapKit */,
+			);
+			productName = Alarmy;
+			productReference = 94A06A572EB87F0F003F2010 /* Alarmy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		94A06A6F2EB87F10003F2010 /* AlarmyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94A06A882EB87F11003F2010 /* Build configuration list for PBXNativeTarget "AlarmyTests" */;
+			buildPhases = (
+				94A06A6C2EB87F10003F2010 /* Sources */,
+				94A06A6D2EB87F10003F2010 /* Frameworks */,
+				94A06A6E2EB87F10003F2010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94A06A722EB87F10003F2010 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				94A06A732EB87F10003F2010 /* AlarmyTests */,
+			);
+			name = AlarmyTests;
+			packageProductDependencies = (
+			);
+			productName = AlarmyTests;
+			productReference = 94A06A702EB87F10003F2010 /* AlarmyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		94A06A792EB87F11003F2010 /* AlarmyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94A06A8B2EB87F11003F2010 /* Build configuration list for PBXNativeTarget "AlarmyUITests" */;
+			buildPhases = (
+				94A06A762EB87F11003F2010 /* Sources */,
+				94A06A772EB87F11003F2010 /* Frameworks */,
+				94A06A782EB87F11003F2010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94A06A7C2EB87F11003F2010 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				94A06A7D2EB87F11003F2010 /* AlarmyUITests */,
+			);
+			name = AlarmyUITests;
+			packageProductDependencies = (
+			);
+			productName = AlarmyUITests;
+			productReference = 94A06A7A2EB87F11003F2010 /* AlarmyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94A06A4F2EB87F0F003F2010 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					94A06A562EB87F0F003F2010 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					94A06A6F2EB87F10003F2010 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 94A06A562EB87F0F003F2010;
+					};
+					94A06A792EB87F11003F2010 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 94A06A562EB87F0F003F2010;
+					};
+				};
+			};
+			buildConfigurationList = 94A06A522EB87F0F003F2010 /* Build configuration list for PBXProject "Alarmy" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 94A06A4E2EB87F0F003F2010;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				94A06ABC2EB8809F003F2010 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 94A06A582EB87F0F003F2010 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94A06A562EB87F0F003F2010 /* Alarmy */,
+				94A06A6F2EB87F10003F2010 /* AlarmyTests */,
+				94A06A792EB87F11003F2010 /* AlarmyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94A06A552EB87F0F003F2010 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94A06A6E2EB87F10003F2010 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94A06A782EB87F11003F2010 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94A06A532EB87F0F003F2010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94A06A6C2EB87F10003F2010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94A06A762EB87F11003F2010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		94A06A722EB87F10003F2010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94A06A562EB87F0F003F2010 /* Alarmy */;
+			targetProxy = 94A06A712EB87F10003F2010 /* PBXContainerItemProxy */;
+		};
+		94A06A7C2EB87F11003F2010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94A06A562EB87F0F003F2010 /* Alarmy */;
+			targetProxy = 94A06A7B2EB87F11003F2010 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		94A06A842EB87F11003F2010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JDARSK83RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Alarmy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = oww.Alarmy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		94A06A852EB87F11003F2010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JDARSK83RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Alarmy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = oww.Alarmy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		94A06A862EB87F11003F2010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		94A06A872EB87F11003F2010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		94A06A892EB87F11003F2010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JDARSK83RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = oww.AlarmyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Alarmy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Alarmy";
+			};
+			name = Debug;
+		};
+		94A06A8A2EB87F11003F2010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JDARSK83RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = oww.AlarmyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Alarmy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Alarmy";
+			};
+			name = Release;
+		};
+		94A06A8C2EB87F11003F2010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JDARSK83RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = oww.AlarmyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Alarmy;
+			};
+			name = Debug;
+		};
+		94A06A8D2EB87F11003F2010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JDARSK83RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = oww.AlarmyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Alarmy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94A06A522EB87F0F003F2010 /* Build configuration list for PBXProject "Alarmy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94A06A862EB87F11003F2010 /* Debug */,
+				94A06A872EB87F11003F2010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94A06A832EB87F11003F2010 /* Build configuration list for PBXNativeTarget "Alarmy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94A06A842EB87F11003F2010 /* Debug */,
+				94A06A852EB87F11003F2010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94A06A882EB87F11003F2010 /* Build configuration list for PBXNativeTarget "AlarmyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94A06A892EB87F11003F2010 /* Debug */,
+				94A06A8A2EB87F11003F2010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94A06A8B2EB87F11003F2010 /* Build configuration list for PBXNativeTarget "AlarmyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94A06A8C2EB87F11003F2010 /* Debug */,
+				94A06A8D2EB87F11003F2010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		94A06ABC2EB8809F003F2010 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		94A06ABD2EB8809F003F2010 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94A06ABC2EB8809F003F2010 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 94A06A4F2EB87F0F003F2010 /* Project object */;
+}
