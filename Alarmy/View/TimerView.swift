@@ -33,6 +33,14 @@ final class TimerView: UIView {
         button.layer.cornerRadius = 45
         return button
     }()
+    //
+    let countdownLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 50, weight: .bold)
+        label.textColor = .textColor
+        label.isHidden = true
+        return label
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +54,7 @@ final class TimerView: UIView {
     }
     
     private func setupUI(){
-        [timerLabel, pickerView,cancelButton,startButton].forEach{
+        [timerLabel, pickerView,countdownLabel,cancelButton,startButton].forEach{
             self.addSubview($0)
         }
         
@@ -69,6 +77,10 @@ final class TimerView: UIView {
             make.top.equalTo(cancelButton)
             make.trailing.equalToSuperview().inset(20)
             make.width.height.equalTo(90)
+        }
+        
+        countdownLabel.snp.makeConstraints{ make in
+            make.center.equalTo(pickerView)
         }
     }
     
