@@ -21,6 +21,7 @@ extension UIColor{
     static let bgColor = UIColor(cgColor: CGColor(red: 16/255, green: 16/255, blue: 16/255, alpha: 1))
     //텍스트 컬러
     static let textColor = UIColor(cgColor: CGColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1))
+
 }
 
 
