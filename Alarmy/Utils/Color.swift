@@ -17,6 +17,10 @@ extension UIColor{
     static let cancelBGColor = UIColor(cgColor: CGColor(red: 64/255, green: 64/255, blue: 64/255, alpha: 0.31))
     //선택 버튼
     static let selectBGColor = UIColor(cgColor: CGColor(red: 221/255, green: 126/255, blue: 18/255, alpha: 0.31))
+    //백그라운드 컬러
+    static let bgColor = UIColor(cgColor: CGColor(red: 16/255, green: 16/255, blue: 16/255, alpha: 1))
+    //텍스트 컬러
+    static let textColor = UIColor(cgColor: CGColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1))
 }
 
 
