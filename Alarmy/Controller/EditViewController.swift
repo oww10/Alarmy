@@ -18,6 +18,7 @@ class EditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+
         configureUI()
         configureStack()
     }
@@ -89,9 +90,10 @@ class EditViewController: UIViewController {
             attributes: [.foregroundColor: UIColor.lightGray]
         )
         textfield.textAlignment = .right
-        textfield.textColor = UIColor(cgColor: CGColor(red: 0x90/255.0, green: 0x90/255.0, blue: 0x90/255.0, alpha: 1.0))
+        textfield.textColor = UIColor(red: 144/255.0, green: 144/255.0, blue: 144/255.0, alpha: 1.0)
+
         textfield.borderStyle = .line
-        textfield.backgroundColor = UIColor.dayBGColor
+        textfield.backgroundColor = UIColor(red: 41/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1.0)
         textfield.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
         textfield.rightViewMode = .always
         textfield.snp.makeConstraints {
@@ -109,7 +111,7 @@ class EditViewController: UIViewController {
             let title = days[index]
             button.setTitle(title, for: .normal)
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = UIColor.dayBGColor
+            button.backgroundColor = UIColor(red: 41/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1.0)
             button.layer.cornerRadius = 25
             button.snp.makeConstraints {
                 $0.width.height.equalTo(50)
