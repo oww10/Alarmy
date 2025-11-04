@@ -24,6 +24,15 @@ final class StopWatchViewController: UIViewController{
         button.addTarget(self, action: #selector(startPauseTime), for: .touchUpInside)
         return button
     }()
+    private lazy var resetButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("재설정", for: .normal)
+        button.setTitleColor(.cancelTextColor, for: .normal)
+        button.backgroundColor = .cancelBGColor
+        button.layer.cornerRadius = 45
+        button.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +41,8 @@ final class StopWatchViewController: UIViewController{
     }
     
     private func configureUI() {
-        view.backgroundColor = .black
-        [timeLabel, startButton].forEach { view.addSubview($0) }
+        view.backgroundColor = .bgColor
+        [timeLabel, startButton, resetButton].forEach { view.addSubview($0) }
     }
     private func setConstraints() {
         timeLabel.snp.makeConstraints {
@@ -43,6 +52,11 @@ final class StopWatchViewController: UIViewController{
         startButton.snp.makeConstraints{
             $0.top.equalTo(timeLabel.snp.bottom).offset(30)
             $0.trailing.equalToSuperview().inset(30)
+            $0.width.height.equalTo(90)
+        }
+        resetButton.snp.makeConstraints{
+            $0.top.equalTo(timeLabel.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(30)
             $0.width.height.equalTo(90)
         }
     }
@@ -86,5 +100,12 @@ extension StopWatchViewController {
             isPlay = false
             changeButton(startButton, backgroundColor: .startBGColor, title: "시작", titleColor: .startTextColor)
         }
+    }
+    // 재설정버튼 액션 함수
+    @objc
+    private func resetTime() {
+        stopWatch.timer.invalidate()
+        stopWatch.counter = 0.0
+        timeLabel.text = "00:00.00"
     }
 }
