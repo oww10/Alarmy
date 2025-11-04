@@ -7,7 +7,10 @@ final class TimerViewController: UIViewController{
 
     private let timerView = TimerView()
     private var timerModel = TimerModel()
-
+    private let notification = TimerNotification()
+    private var timer: Timer?
+    private var remainingSeconds: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = timerView
@@ -24,10 +27,45 @@ final class TimerViewController: UIViewController{
         timerView.cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
     @objc private func tappedStartButton(){
+        let totalSeconds = timerModel.totalTimer
+        remainingSeconds = totalSeconds
         
+        notification.scheduleNotification(in: TimeInterval(totalSeconds))
+        timerView.pickerView.isHidden = true
+        timerView.countdownLabel.isHidden = false
+        updateCountdownLabel() 
+        startTimer()
     }
     @objc private func tappedCancelButton(){
-        timerModel.updateTimer(hour: 0, minute: 0, second: 0)
+        notification.cancelNotification()
+        timerView.pickerView.isHidden = false
+        timerView.countdownLabel.isHidden = true
+    }
+    
+    private func startTimer(){
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    @objc private func updateTimer(){
+        if remainingSeconds > 0 {
+            remainingSeconds -= 1
+            updateCountdownLabel()
+        } else {
+            stopTimer()
+        }
+    }
+    private func updateCountdownLabel() {
+        let hours = remainingSeconds / 3600
+        let minutes = (remainingSeconds % 3600) / 60
+        let seconds = (remainingSeconds % 3600) % 60
+        
+        timerView.countdownLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 
 }

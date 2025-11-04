@@ -5,10 +5,14 @@ import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let notifDelegate = NotificationDelegate()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
         
+        UNUserNotificationCenter.current().delegate = notifDelegate
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions){ res, error in
             if res {
                 print("알림 허용")
@@ -16,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("알림 거부")
             }
         }
-        
+
         return true
     }
 
@@ -81,3 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate{
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound, .list])
+    }
+}
