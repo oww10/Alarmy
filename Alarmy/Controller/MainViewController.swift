@@ -11,9 +11,15 @@ class MainViewController: UITabBarController {
     }
 
     private func setupTabs(){
+        let worldClockVC = UINavigationController(rootViewController: WorldClockViewController())
         let alarmVC = UINavigationController(rootViewController: AlarmViewController())
         let stopWatchVC = UINavigationController(rootViewController: StopWatchViewController())
         let timerVC = UINavigationController(rootViewController: TimerViewController())
+        
+        worldClockVC.tabBarItem = UITabBarItem(
+            title: "세계 시간",
+            image: UIImage(systemName: "globe"),
+            selectedImage: UIImage(systemName: "globe.fill"))
         
         alarmVC.tabBarItem = UITabBarItem(
             title: "알람",
@@ -30,7 +36,7 @@ class MainViewController: UITabBarController {
             image: UIImage(systemName: "timer"),
             selectedImage: UIImage(systemName: "timer.fill"))
         
-        self.viewControllers = [alarmVC, stopWatchVC, timerVC]
+        self.viewControllers = [worldClockVC, alarmVC, stopWatchVC, timerVC]
     }
 }
 
