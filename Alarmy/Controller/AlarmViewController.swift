@@ -43,6 +43,7 @@ class AlarmViewController: UIViewController{
             $0.leading.equalToSuperview().inset(30)
             $0.top.equalToSuperview().inset(140)
         }
+
     }
     
     @objc private func deleteTapped() {
