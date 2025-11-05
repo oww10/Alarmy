@@ -39,10 +39,13 @@ final class TimerViewController: UIViewController{
         notification.scheduleNotification(in: TimeInterval(totalSeconds))
         updateCountdownLabel() 
         startTimer()
+        
+        timerView.startAnimation(duration: TimeInterval(totalSeconds))
     }
     @objc private func tappedCancelButton(){
         notification.cancelNotification()
         stopTimer()
+
     }
     
     private func startTimer(){
@@ -55,12 +58,14 @@ final class TimerViewController: UIViewController{
         timer?.invalidate()
         timer = nil
         currentState = .selectTime
+        timerView.stopAnimation()
     }
     
     @objc private func updateTimer(){
         if remainingSeconds > 0 {
             remainingSeconds -= 1
             updateCountdownLabel()
+            
         } else {
             stopTimer()
         }
@@ -77,9 +82,13 @@ final class TimerViewController: UIViewController{
         case .selectTime:
             timerView.pickerView.isHidden = false
             timerView.countdownLabel.isHidden = true
+            timerView.trackLayer.isHidden = true
+            timerView.barLayer.isHidden = true
         case .Timer:
             timerView.pickerView.isHidden = true
             timerView.countdownLabel.isHidden = false
+            timerView.trackLayer.isHidden = false
+            timerView.barLayer.isHidden = false
         }
     }
 }
