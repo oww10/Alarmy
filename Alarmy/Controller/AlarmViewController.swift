@@ -103,6 +103,26 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
            return configuration
        }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedAlarm = alarmInfo[indexPath.row]
+        let editVC = EditViewController(alarm: selectedAlarm)
+        editVC.delegate = self
+        
+        let nav = UINavigationController(rootViewController: editVC)
+        nav.modalPresentationStyle = .pageSheet
+        
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.preferredCornerRadius = 30
+            sheet.prefersGrabberVisible = true
+        }
+        
+        present(nav, animated: true)
+        
+    }
+    
     
     @objc private func deleteTapped(_ sender: UIButton) {
         guard !alarmInfo.isEmpty else { return }
@@ -134,6 +154,9 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         present(nav, animated: true)
     }
     
+
+
+    
 }
 
 
@@ -146,6 +169,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AlarmTableViewCell.identifier, for: indexPath) as? AlarmTableViewCell else { return .init() }
         
+        cell.selectionStyle = .none
         cell.backgroundColor = .black
         cell.configure(with: alarmInfo[indexPath.row])
         

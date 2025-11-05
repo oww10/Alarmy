@@ -11,32 +11,35 @@ class EditViewController: UIViewController {
     private let days = ["일", "월", "화", "수", "목", "금", "토"]
     private let dayButtons: [UIButton] = (0..<7).map { _ in UIButton() }
     private let stackView = UIStackView()
-    private let alarmLabel = UILabel()
+    private let labelText = UILabel()
     private let textfield = UITextField()
-    private let alarmToEdit: Alarm?
+    var editedAlarm: Alarm?
     weak var delegate: EditViewControllerDelegate?
-
-
+    
+    init(alarm: Alarm? = nil) {
+        self.editedAlarm = alarm
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-
         configureUI()
         configureStack()
+        editWithInfo()
     }
     
-    init(alarm: Alarm? = nil) {
-        self.alarmToEdit = alarm
-        super.init(nibName: nil, bundle: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        editWithInfo()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
     
     private func configureUI() {
-        [mainLabel, picker, repeatLabel, stackView, alarmLabel, textfield]
+        [mainLabel, picker, repeatLabel, stackView, labelText, textfield]
             .forEach { view.addSubview($0) }
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "취소",
@@ -56,13 +59,13 @@ class EditViewController: UIViewController {
         ap.configureWithOpaqueBackground()
         ap.backgroundColor = .black
         ap.titleTextAttributes = [.foregroundColor: UIColor.white]
-
+        
         let navBar = navigationController?.navigationBar
         navBar?.standardAppearance = ap
         navBar?.scrollEdgeAppearance = ap
         navBar?.compactAppearance = ap
         navigationItem.title = "알람 편집"
-
+        
         
         if let sheetPresentationController = sheetPresentationController {
             sheetPresentationController.detents = [.large()]
@@ -75,7 +78,7 @@ class EditViewController: UIViewController {
         picker.translatesAutoresizingMaskIntoConstraints = false
         overrideUserInterfaceStyle = .light
         picker.setValue(UIColor.white, forKey: "textColor")
-
+        
         picker.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().inset(100)
@@ -89,10 +92,10 @@ class EditViewController: UIViewController {
             $0.top.equalTo(picker.snp.bottom).offset(40)
         }
         
-        alarmLabel.text = "레이블"
-        alarmLabel.textColor = .white
-        alarmLabel.font = .systemFont(ofSize: 20, weight: .regular)
-        alarmLabel.snp.makeConstraints {
+        labelText.text = "레이블"
+        labelText.textColor = .white
+        labelText.font = .systemFont(ofSize: 20, weight: .regular)
+        labelText.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalTo(stackView.snp.bottom).offset(40)
         }
@@ -103,13 +106,13 @@ class EditViewController: UIViewController {
         )
         textfield.textAlignment = .right
         textfield.textColor = UIColor(red: 144/255.0, green: 144/255.0, blue: 144/255.0, alpha: 1.0)
-
+        
         textfield.borderStyle = .line
         textfield.backgroundColor = UIColor(red: 41/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1.0)
         textfield.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
         textfield.rightViewMode = .always
         textfield.snp.makeConstraints {
-            $0.top.equalTo(alarmLabel.snp.bottom).offset(20)
+            $0.top.equalTo(labelText.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(370)
             $0.height.equalTo(37)
@@ -139,7 +142,39 @@ class EditViewController: UIViewController {
         }
     }
     
-  
+    private func editWithInfo() {
+        guard let alarm = editedAlarm else { return }
+        
+        if let pickerDate = alarm.date {
+            picker.date = pickerDate
+        }
+        
+        textfield.text = alarm.alarmLabel
+        
+        let storeRepeatDays: [Int] = {
+            if let ints = alarm.value(forKey: "repeatDays") as? [Int] { return ints }
+            if let nums = alarm.value(forKey: "repeatDays") as? [NSNumber] { return nums.map(\.intValue)}
+            return []
+        }()
+        
+        for (i, btn) in dayButtons.enumerated() {
+            let selected = storeRepeatDays.contains(i)
+            setDayButton(btn, selected: selected)
+        }
+
+    }
+    
+    
+    
+    private func setDayButton(_ button: UIButton, selected: Bool) {
+        button.isSelected = selected
+        if selected {
+            button.backgroundColor = UIColor.selectBGColor
+        } else {
+            button.backgroundColor = UIColor(red: 41/255, green: 41/255, blue: 41/255, alpha: 1)
+        }
+    }
+    
     
     @objc private func cancelButtonTapped() { dismiss(animated: true) }
     
@@ -148,9 +183,17 @@ class EditViewController: UIViewController {
         let repeatDays = dayButtons.enumerated().compactMap { index, button in
             button.isSelected ? index : nil
         }
-        let alarmLabel = alarmLabel.text ?? ""
+        let labelText = textfield.text ?? ""
         
-        CoreDataManager.shared.createData(date: date, alarmLabel: alarmLabel, repeatDays: repeatDays)
+        if let alarm = editedAlarm {
+            alarm.date = date
+            alarm.alarmLabel = labelText
+            alarm.setValue(repeatDays.map(NSNumber.init(value:)), forKey: "repeatDays")
+
+            CoreDataManager.shared.saveContext()
+        } else {
+            CoreDataManager.shared.createData(date: date, alarmLabel: labelText, repeatDays: repeatDays)
+        }
         
         dismiss(animated: true) { [weak self] in
             guard let self else { return }
@@ -160,6 +203,7 @@ class EditViewController: UIViewController {
     
     @objc private func dayButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
-        sender.backgroundColor = sender.isSelected ? UIColor(red: 41/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1.0) : UIColor.selectBGColor
+        setDayButton(sender, selected: sender.isSelected)
+
     }
 }
