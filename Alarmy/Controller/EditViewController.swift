@@ -13,7 +13,8 @@ class EditViewController: UIViewController {
     private let stackView = UIStackView()
     private let alarmLabel = UILabel()
     private let textfield = UITextField()
-    
+    private let alarmToEdit: Alarm?
+    weak var delegate: EditViewControllerDelegate?
 
 
     
@@ -23,6 +24,15 @@ class EditViewController: UIViewController {
 
         configureUI()
         configureStack()
+    }
+    
+    init(alarm: Alarm? = nil) {
+        self.alarmToEdit = alarm
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func configureUI() {
@@ -142,7 +152,10 @@ class EditViewController: UIViewController {
         
         CoreDataManager.shared.createData(date: date, alarmLabel: alarmLabel, repeatDays: repeatDays)
         
-        dismiss(animated: true)
+        dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.delegate?.didUpdateAlarm()
+        }
     }
     
     @objc private func dayButtonTapped(_ sender: UIButton) {
