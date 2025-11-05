@@ -33,6 +33,12 @@ final class StopWatchViewController: UIViewController{
         button.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
         return button
     }()
+    private let formatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +69,7 @@ final class StopWatchViewController: UIViewController{
 }
 
 extension StopWatchViewController {
-    // "시작", "중단" 버튼 변경 함수
+    // "시작", "중단" 버튼 UI 변경 함수
     private func changeButton(_ button: UIButton, backgroundColor: UIColor, title: String, titleColor: UIColor) {
         button.backgroundColor = backgroundColor
         button.setTitle(title, for: UIControl.State())
@@ -71,16 +77,12 @@ extension StopWatchViewController {
      }
     // 시간 업데이트 함수
     private func updateTimer(_ stopWatch: StopWatch, label: UILabel) {
-        stopWatch.counter = stopWatch.counter + 0.01
-        var minutes: String = "\((Int)(stopWatch.counter / 60))"
-        if (Int)(stopWatch.counter / 60) < 10 {
-            minutes = "0\((Int)(stopWatch.counter / 60))"
-        }
-        var seconds: String = String(format: "%.2f", (stopWatch.counter.truncatingRemainder(dividingBy: 60)))
-        if stopWatch.counter.truncatingRemainder(dividingBy: 60) < 10 {
-            seconds = "0" + seconds
-        }
-        label.text = minutes + ":" + seconds
+        stopWatch.counter += 0.01
+        let withoutMilliseconds = Int(stopWatch.counter)
+        let minutesSeconds = formatter.string(from: TimeInterval(withoutMilliseconds)) ?? "00:00"
+        let milliseconds = String(format: "%.2f", stopWatch.counter.truncatingRemainder(dividingBy: 1)).dropFirst()
+        
+        timeLabel.text = minutesSeconds + milliseconds
     }
     // timeLabel 업데이트
     @objc
