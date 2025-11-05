@@ -11,12 +11,18 @@ final class TimerViewController: UIViewController{
     private var timer: Timer?
     private var remainingSeconds: Int = 0
     
+    private var currentState: ViewState = .selectTime{
+        didSet{
+            updateUIState()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = timerView
         settingPickerView()
         settingAddTarget()
-        
+        currentState = .selectTime
     }
     private func settingPickerView(){
         timerView.pickerView.delegate = self
@@ -31,25 +37,24 @@ final class TimerViewController: UIViewController{
         remainingSeconds = totalSeconds
         
         notification.scheduleNotification(in: TimeInterval(totalSeconds))
-        timerView.pickerView.isHidden = true
-        timerView.countdownLabel.isHidden = false
         updateCountdownLabel() 
         startTimer()
     }
     @objc private func tappedCancelButton(){
         notification.cancelNotification()
-        timerView.pickerView.isHidden = false
-        timerView.countdownLabel.isHidden = true
+        stopTimer()
     }
     
     private func startTimer(){
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        currentState = .Timer
     }
     
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+        currentState = .selectTime
     }
     
     @objc private func updateTimer(){
@@ -67,7 +72,16 @@ final class TimerViewController: UIViewController{
         
         timerView.countdownLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
-
+    private func updateUIState(){
+        switch currentState{
+        case .selectTime:
+            timerView.pickerView.isHidden = false
+            timerView.countdownLabel.isHidden = true
+        case .Timer:
+            timerView.pickerView.isHidden = true
+            timerView.countdownLabel.isHidden = false
+        }
+    }
 }
 
 extension TimerViewController: UIPickerViewDataSource{

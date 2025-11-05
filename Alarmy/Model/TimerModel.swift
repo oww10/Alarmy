@@ -1,6 +1,11 @@
 
 import Foundation
 
+enum ViewState{
+    case Timer
+    case selectTime
+}
+
 struct TimerModel{
     let hours = Array(0...23)
     let minutes = Array(0...59)
