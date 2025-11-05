@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58953C9C2EBA14F50012529B /* Alarm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58953C9A2EBA14F50012529B /* Alarm+CoreDataClass.swift */; };
+		58953C9D2EBA14F50012529B /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58953C9B2EBA14F50012529B /* Alarm+CoreDataProperties.swift */; };
 		94A06ABE2EB8809F003F2010 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 94A06ABD2EB8809F003F2010 /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		58953C9A2EBA14F50012529B /* Alarm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataClass.swift"; sourceTree = "<group>"; };
+		58953C9B2EBA14F50012529B /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		94A06A572EB87F0F003F2010 /* Alarmy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alarmy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94A06A702EB87F10003F2010 /* AlarmyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlarmyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94A06A7A2EB87F11003F2010 /* AlarmyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlarmyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +97,8 @@
 		94A06A4E2EB87F0F003F2010 = {
 			isa = PBXGroup;
 			children = (
+				58953C9A2EBA14F50012529B /* Alarm+CoreDataClass.swift */,
+				58953C9B2EBA14F50012529B /* Alarm+CoreDataProperties.swift */,
 				94A06A592EB87F0F003F2010 /* Alarmy */,
 				94A06A732EB87F10003F2010 /* AlarmyTests */,
 				94A06A7D2EB87F11003F2010 /* AlarmyUITests */,
@@ -258,6 +264,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58953C9C2EBA14F50012529B /* Alarm+CoreDataClass.swift in Sources */,
+				58953C9D2EBA14F50012529B /* Alarm+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +306,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JDARSK83RW;
+				DEVELOPMENT_TEAM = 2XC69D3R8Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Alarmy/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -326,7 +334,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JDARSK83RW;
+				DEVELOPMENT_TEAM = 2XC69D3R8Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Alarmy/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
