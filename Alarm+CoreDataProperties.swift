@@ -21,7 +21,7 @@ extension Alarm {
     @NSManaged public var date: Date?
     @NSManaged public var repeatDays: [Int]?
     @NSManaged public var alarmLabel: String?
-
+    @NSManaged var isOn: Bool
 }
 
 extension Alarm : Identifiable {

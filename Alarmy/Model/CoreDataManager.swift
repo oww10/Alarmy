@@ -1,10 +1,3 @@
-//
-//  CoreDataManager.swift
-//  Alarmy
-//
-//  Created by jyeee on 11/4/25.
-//
-
 import Foundation
 import UIKit
 import CoreData
@@ -22,8 +15,8 @@ class CoreDataManager {
         })
         return container
     }()
-
-
+    
+    
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -37,19 +30,55 @@ class CoreDataManager {
     }
     
     func createData(date: Date, alarmLabel: String, repeatDays: [Int]) {
-        guard let entity = NSEntityDescription.entity(forEntityName: "Alarm", in: self.persistentContainer.viewContext) else { return }
-        
-        let newAlarm = NSManagedObject(entity: entity, insertInto: self.persistentContainer.viewContext)
-        
-        newAlarm.setValue(date, forKey: "date")
-        newAlarm.setValue(alarmLabel, forKey: "alarmLabel")
-        newAlarm.setValue(repeatDays, forKey: "repeatDays")
-        
+        let context = persistentContainer.viewContext
+        let alarm = Alarm(context: context)
+        alarm.date = date
+        alarm.alarmLabel = alarmLabel
+        alarm.repeatDays = repeatDays
+
         do {
-            try self.persistentContainer.viewContext.save()
+            try context.save()
+            NotificationCenter.default.post(name: .init("alarmDidChange"), object: nil)
             print("저장 성공")
         } catch {
-            print("저장 실패")
+            print("저장 실패:", error)
+        }
+    }
+
+    
+    func readData() -> [Alarm] {
+        let context = persistentContainer.viewContext
+        let request: NSFetchRequest<Alarm> = Alarm.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("❌ Fetch error:", error)
+            return []
+        }
+    }
+    
+    func deleteData(alarm: Alarm) {
+        let context = persistentContainer.viewContext
+        context.delete(alarm)
+        do {
+            try context.save()
+            print("스와이프 삭제 성공")
+        } catch {
+            print("스와이프 삭제 실패")
+        }
+    }
+    
+    func deleteAllData() {
+        let context = persistentContainer.viewContext
+        let request: NSFetchRequest<Alarm> = Alarm.fetchRequest()
+        do {
+            let all = try context.fetch(request)
+            all.forEach { context.delete($0) }
+            try context.save()
+            print("전체 삭제 성공")
+        } catch {
+            print("전체 삭제 실패")
         }
     }
 }

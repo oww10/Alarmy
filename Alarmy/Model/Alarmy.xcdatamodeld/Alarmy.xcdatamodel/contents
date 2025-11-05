@@ -3,6 +3,7 @@
     <entity name="Alarm" representedClassName="Alarm" syncable="YES">
         <attribute name="alarmLabel" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="repeatDays" optional="YES" attributeType="Transformable"/>
     </entity>
 </model>
