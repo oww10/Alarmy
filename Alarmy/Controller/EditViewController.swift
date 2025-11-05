@@ -11,8 +11,10 @@ class EditViewController: UIViewController {
     private let days = ["일", "월", "화", "수", "목", "금", "토"]
     private let dayButtons: [UIButton] = (0..<7).map { _ in UIButton() }
     private let stackView = UIStackView()
-    private let label = UILabel()
+    private let alarmLabel = UILabel()
     private let textfield = UITextField()
+    
+
 
     
     override func viewDidLoad() {
@@ -24,13 +26,13 @@ class EditViewController: UIViewController {
     }
     
     private func configureUI() {
-        [mainLabel, picker, repeatLabel, stackView, label, textfield]
+        [mainLabel, picker, repeatLabel, stackView, alarmLabel, textfield]
             .forEach { view.addSubview($0) }
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "취소",
             style: .plain,
             target: self,
-            action: #selector(cancelButton)
+            action: #selector(cancelButtonTapped)
         )
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -58,7 +60,7 @@ class EditViewController: UIViewController {
         
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
-        picker.minuteInterval = 5
+        picker.minuteInterval = 1
         picker.locale = Locale(identifier: "ko_KR")
         picker.translatesAutoresizingMaskIntoConstraints = false
         overrideUserInterfaceStyle = .light
@@ -77,10 +79,10 @@ class EditViewController: UIViewController {
             $0.top.equalTo(picker.snp.bottom).offset(40)
         }
         
-        label.text = "레이블"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 20, weight: .regular)
-        label.snp.makeConstraints {
+        alarmLabel.text = "레이블"
+        alarmLabel.textColor = .white
+        alarmLabel.font = .systemFont(ofSize: 20, weight: .regular)
+        alarmLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalTo(stackView.snp.bottom).offset(40)
         }
@@ -97,7 +99,7 @@ class EditViewController: UIViewController {
         textfield.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
         textfield.rightViewMode = .always
         textfield.snp.makeConstraints {
-            $0.top.equalTo(label.snp.bottom).offset(20)
+            $0.top.equalTo(alarmLabel.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(370)
             $0.height.equalTo(37)
@@ -113,15 +115,14 @@ class EditViewController: UIViewController {
             button.setTitleColor(.white, for: .normal)
             button.backgroundColor = UIColor(red: 41/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1.0)
             button.layer.cornerRadius = 25
-            button.snp.makeConstraints {
-                $0.width.height.equalTo(50)
-                
-            }
+            button.snp.makeConstraints { $0.width.height.equalTo(50) }
+            button.addTarget(self, action: #selector(dayButtonTapped(_:)), for: .touchUpInside)
         }
         
         stackView.axis = .horizontal
         stackView.spacing = 5
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
+        stackView.alignment = .fill
         stackView.snp.makeConstraints {
             $0.top.equalTo(repeatLabel.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
@@ -130,11 +131,22 @@ class EditViewController: UIViewController {
     
   
     
-    @objc private func cancelButton() {
-        
-    }
+    @objc private func cancelButtonTapped() { dismiss(animated: true) }
     
     @objc private func storeButton() {
+        let date = picker.date
+        let repeatDays = dayButtons.enumerated().compactMap { index, button in
+            button.isSelected ? index : nil
+        }
+        let alarmLabel = alarmLabel.text ?? ""
         
+        CoreDataManager.shared.createData(date: date, alarmLabel: alarmLabel, repeatDays: repeatDays)
+        
+        dismiss(animated: true)
+    }
+    
+    @objc private func dayButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        sender.backgroundColor = sender.isSelected ? UIColor(red: 41/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1.0) : UIColor.selectBGColor
     }
 }
