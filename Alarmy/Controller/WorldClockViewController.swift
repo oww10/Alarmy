@@ -46,18 +46,21 @@ class WorldClockViewController: UIViewController {
     private func setupNavigationBar() {
         let addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(didTappedAdd))
         self.navigationItem.rightBarButtonItem = addButton
-        self.navigationItem.rightBarButtonItem?.tintColor = .selectTextColor
+        self.navigationItem.rightBarButtonItem?.tintColor = .selectBGColor
         
         let deleteAllButton = UIBarButtonItem(title: "전체 삭제", style: .plain, target: self, action: #selector(didTappedDeleteAll))
         self.navigationItem.leftBarButtonItem = deleteAllButton
-        self.navigationItem.leftBarButtonItem?.tintColor = .selectTextColor
+        self.navigationItem.leftBarButtonItem?.tintColor = .selectBGColor
     }
 }
 // 내비게이션바 버튼 실행 함수
 extension WorldClockViewController {
     @objc
     private func didTappedAdd() {
-        print("추가버튼 눌림")
+
+        let citySearchVC = UINavigationController(rootViewController: CitySearchViewController())
+        citySearchVC.modalPresentationStyle = .pageSheet
+        self.present(citySearchVC, animated: true, completion: nil)
     }
     @objc
     private func didTappedDeleteAll() {
