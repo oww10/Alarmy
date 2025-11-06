@@ -3,10 +3,12 @@ import SnapKit
 
 class CitySearchViewController: UIViewController {
     
+    let cityData: [(cityName: String, countryName: String, timeZoneID: String)] = WorldClockModel.shared.worldClockData()
+    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.gray]
-        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "도시를 입력하세요", attributes: attributes)
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "도시(나라)를 입력하세요", attributes: attributes)
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.textColor = .white
         searchBar.searchTextField.leftView?.tintColor = .gray
@@ -21,7 +23,6 @@ class CitySearchViewController: UIViewController {
         tableView.register(CitySearchCell.self, forCellReuseIdentifier: CitySearchCell.id)
         return tableView
     }()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,7 @@ class CitySearchViewController: UIViewController {
     }
     // 내비게이션바 아이템 추가
     private func setupNavigationBar() {
-        self.navigationItem.title = "도시 선택"
+        self.navigationItem.title = "도시(나라) 선택"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButton))
@@ -71,14 +72,15 @@ extension CitySearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        return cityData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell =  tableView.dequeueReusableCell(withIdentifier: CitySearchCell.id, for: indexPath) as? CitySearchCell else {
             return UITableViewCell()
         }
-        cell.configure()
+        let cityData = self.cityData[indexPath.row]
+        cell.configure(with: cityData)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -9,7 +9,7 @@ class CitySearchCell: UITableViewCell {
         let label = UILabel()
         label.text = "샌프란시스코"
         label.textColor = .textColor
-        label.font = .monospacedDigitSystemFont(ofSize: 20, weight: .thin)
+        label.font = .monospacedDigitSystemFont(ofSize: 18, weight: .thin)
         label.textAlignment = .left
         return label
     }()
@@ -35,8 +35,9 @@ class CitySearchCell: UITableViewCell {
         }
     }
     
-    func configure() {
-        
+    func configure(with data: (cityName: String, countryName: String, timeZoneID: String)) {
+        let text = "\(data.cityName), \(data.countryName)"
+        cityLable.text = text    
     }
     
 }
