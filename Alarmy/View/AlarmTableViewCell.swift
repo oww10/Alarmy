@@ -37,8 +37,8 @@ class AlarmTableViewCell: UITableViewCell {
         toggle.addTarget(self, action: #selector(didChangeSwitch), for: .valueChanged)
     }
     
-    @objc private func didChangeSwitch() {
-        switchChanged?(toggle.isOn)
+    @objc private func didChangeSwitch(_ sender: UISwitch) {
+        switchChanged?(sender.isOn)
     }
     
     func configure(with alarm: Alarm) {
