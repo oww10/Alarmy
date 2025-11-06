@@ -127,11 +127,11 @@ final class TimerView: UIView {
         barLayer.strokeEnd = progress
     }
     
-    func startAnimation(duration: TimeInterval){
+    func startAnimation(duration: TimeInterval, initProgress: CGFloat){
         barLayer.removeAnimation(forKey: animationKey)
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = 0
+        animation.fromValue = initProgress
         animation.toValue = 1
         animation.duration = duration
         
