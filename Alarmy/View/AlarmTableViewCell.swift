@@ -7,7 +7,7 @@ import UIKit
 class AlarmTableViewCell: UITableViewCell {
     static let identifier = "AlarmTableViewCell"
     
-    private let timeLabel = UILabel()
+    let timeLabel = UILabel()
     private let toggle = UISwitch()
     var switchChanged: ((Bool) -> Void)?
     
@@ -24,7 +24,7 @@ class AlarmTableViewCell: UITableViewCell {
         [timeLabel, toggle].forEach { contentView.addSubview($0) }
         
         timeLabel.textColor = .white
-        timeLabel.font = .systemFont(ofSize: 36, weight: .medium)
+        timeLabel.font = .systemFont(ofSize: 36, weight: .regular)
         timeLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
@@ -42,8 +42,10 @@ class AlarmTableViewCell: UITableViewCell {
     }
     
     func configure(with alarm: Alarm) {
+        // 시간을 오전/오후 단위로 포맷
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "a hh:mm"
         timeLabel.text = formatter.string(from: alarm.date ?? Date())
         toggle.isOn = alarm.isOn
         

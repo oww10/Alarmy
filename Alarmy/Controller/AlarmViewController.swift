@@ -1,6 +1,7 @@
 // 알람 목록
 import UIKit
 import SnapKit
+import UserNotifications
 
 
 class AlarmViewController: UIViewController, EditViewControllerDelegate {
@@ -30,7 +31,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
             title: "전체삭제",
             style: .plain,
             target: self,
-            action: #selector(deleteTapped(_:))
+            action: #selector(deleteTapped)
         )
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -55,6 +56,8 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         
         
     }
+
+
     
     
     /* ----- 테이블 ----- */
@@ -81,6 +84,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
             self.tableView.reloadData()
         }
     }
+
     
     
     
@@ -89,6 +93,8 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
             [weak self](action, view, completion) in
             guard let self = self else { return }
             let info = self.alarmInfo[indexPath.row]
+            let id = info.objectID.uriRepresentation().absoluteString
+            AlarmNotification.shared.cancelAlarm(id: id)
             
             CoreDataManager.shared.deleteData(alarm: info)
             
@@ -124,13 +130,33 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     }
     
     
-    @objc private func deleteTapped(_ sender: UIButton) {
+    @objc private func deleteTapped() {
         guard !alarmInfo.isEmpty else { return }
+        
+        
         
         let alert = UIAlertController(title: "전체 삭제", message: "모든 항목을 삭제할까요?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "삭제", style: .destructive) {[weak self] _ in
             guard let self = self else { return }
+            
+            let center = UNUserNotificationCenter.current()
+
+            // (디버그) 현재 대기중 알림 출력
+            center.getPendingNotificationRequests { reqs in
+                print("🧾 BEFORE pending:", reqs.map { "\($0.identifier) -> \($0.trigger!)" })
+                
+                let center = UNUserNotificationCenter.current()
+                  center.removeAllPendingNotificationRequests()   // 대기 중인 알림 다 삭제
+                  center.removeAllDeliveredNotifications()        // 이미 울린 알림도 삭제
+                  print("🧹 모든 알림 삭제 완료")
+                
+            }
+            
+            for alarmObj in self.alarmInfo {
+                let notiID = alarmObj.objectID.uriRepresentation().absoluteString
+                AlarmNotification.shared.cancelAlarm(id: notiID)
+            }
             self.coreDataManager.deleteAllData()
             self.alarmInfo.removeAll()
             self.tableView.reloadData()
@@ -184,7 +210,20 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             let changedAlarm = self.alarmInfo[ip.row]
             changedAlarm.isOn = isOn
             self.coreDataManager.saveContext()
-            print("알람 \(isOn ? "켜짐" : "꺼짐")")
+            let alarmObj = self.alarmInfo[ip.row]
+            let id = alarmObj.objectID.uriRepresentation().absoluteString
+            
+            if isOn {
+                AlarmNotification.shared.cancelAlarm(id: id)
+                if let date = alarmObj.date {
+                    AlarmNotification.shared.alarmNoti(date: date, id: id)
+                    print("알람 스케줄 ON")
+                }
+            } else {
+                AlarmNotification.shared.cancelAlarm(id: id)
+                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
+                print("알람 스케줄 OFF")
+            }
         }
         
         return cell
