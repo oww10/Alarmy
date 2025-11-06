@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import UserNotifications
 
 class EditViewController: UIViewController {
     private let mainLabel = UILabel()
@@ -52,7 +53,7 @@ class EditViewController: UIViewController {
             title: "저장",
             style: .plain,
             target: self,
-            action: #selector(storeButton)
+            action: #selector(saveButtonTapped)
         )
         
         let ap = UINavigationBarAppearance()
@@ -178,28 +179,40 @@ class EditViewController: UIViewController {
     
     @objc private func cancelButtonTapped() { dismiss(animated: true) }
     
-    @objc private func storeButton() {
+    @objc private func saveButtonTapped() {
         let date = picker.date
-        let repeatDays = dayButtons.enumerated().compactMap { index, button in
-            button.isSelected ? index : nil
-        }
+        let repeatDays = dayButtons.enumerated().compactMap { $1.isSelected ? $0 : nil }
         let labelText = textfield.text ?? ""
-        
+
         if let alarm = editedAlarm {
             alarm.date = date
             alarm.alarmLabel = labelText
-            alarm.setValue(repeatDays.map(NSNumber.init(value:)), forKey: "repeatDays")
-            
+            alarm.repeatDays = repeatDays
+
             CoreDataManager.shared.saveContext()
+
+            let id = alarm.objectID.uriRepresentation().absoluteString
+            // 기존 스케줄 제거
+            AlarmNotification.shared.cancelAlarm(id: id)
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
+
+            if alarm.isOn {
+                AlarmNotification.shared.alarmNoti(date: date, id: id)
+            }
+
         } else {
-            CoreDataManager.shared.createData(date: date, alarmLabel: labelText, repeatDays: repeatDays)
+            // 기본 켜짐이면 true
+            let newAlarm = CoreDataManager.shared.createData(date: date, alarmLabel: labelText, repeatDays: repeatDays, isOn: true)
+            let newID = newAlarm.objectID.uriRepresentation().absoluteString
+            AlarmNotification.shared.cancelAlarm(id: newID)
+            AlarmNotification.shared.alarmNoti(date: date, id: newID)
         }
-        
+
         dismiss(animated: true) { [weak self] in
-            guard let self else { return }
-            self.delegate?.didUpdateAlarm()
+            self?.delegate?.didUpdateAlarm()
         }
     }
+
     
     @objc private func dayButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()

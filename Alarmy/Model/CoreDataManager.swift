@@ -29,12 +29,13 @@ class CoreDataManager {
         }
     }
     
-    func createData(date: Date, alarmLabel: String, repeatDays: [Int]) {
+    func createData(date: Date, alarmLabel: String, repeatDays: [Int], isOn: Bool = true) -> Alarm {
         let context = persistentContainer.viewContext
         let alarm = Alarm(context: context)
         alarm.date = date
         alarm.alarmLabel = alarmLabel
         alarm.repeatDays = repeatDays
+        alarm.isOn = isOn
 
         do {
             try context.save()
@@ -43,6 +44,8 @@ class CoreDataManager {
         } catch {
             print("저장 실패:", error)
         }
+        
+        return alarm
     }
 
     
