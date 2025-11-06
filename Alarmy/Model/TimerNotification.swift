@@ -10,7 +10,8 @@ struct TimerNotification{
         let content = UNMutableNotificationContent()
         content.title = "타이머 종료"
         content.body = "설정한 시간이 모두 지났습니다."
-        content.sound = UNNotificationSound.default
+        content.sound = UNNotificationSound(named: UNNotificationSoundName("iPhoneAlarm.wav"))
+        
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
         
