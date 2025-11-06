@@ -19,7 +19,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         alarmInfo = coreDataManager.readData()
     }
     
-
+    
     func didUpdateAlarm() { reloadAlarm() }
     
     
@@ -53,7 +53,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
             $0.top.equalToSuperview().inset(140)
         }
         
-
+        
     }
     
     
@@ -85,23 +85,23 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-           let deleteAction = UIContextualAction(style: .destructive, title: nil) {
-               [weak self](action, view, completion) in
-               guard let self = self else { return }
-               let info = self.alarmInfo[indexPath.row]
-               
-               CoreDataManager.shared.deleteData(alarm: info)
-               
-               self.alarmInfo.remove(at: indexPath.row)
-               tableView.deleteRows(at: [indexPath], with: .automatic)
-               completion(true)
-           }
-           
-           deleteAction.image = UIImage(systemName: "trash")
-           let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-           configuration.performsFirstActionWithFullSwipe = true
-           return configuration
-       }
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) {
+            [weak self](action, view, completion) in
+            guard let self = self else { return }
+            let info = self.alarmInfo[indexPath.row]
+            
+            CoreDataManager.shared.deleteData(alarm: info)
+            
+            self.alarmInfo.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completion(true)
+        }
+        
+        deleteAction.image = UIImage(systemName: "trash")
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -128,7 +128,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         guard !alarmInfo.isEmpty else { return }
         
         let alert = UIAlertController(title: "전체 삭제", message: "모든 항목을 삭제할까요?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "삭제", style: .destructive) {[weak self] _ in
             guard let self = self else { return }
             self.coreDataManager.deleteAllData()
@@ -154,8 +154,8 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         present(nav, animated: true)
     }
     
-
-
+    
+    
     
 }
 
@@ -172,6 +172,20 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.backgroundColor = .black
         cell.configure(with: alarmInfo[indexPath.row])
+        
+        // 토글 스위치
+        cell.switchChanged = { [weak self, weak tableView, weak cell] isOn in
+            guard let self,
+                  let tableView,
+                  let cell,
+                  let ip = tableView.indexPath(for: cell)
+            else { return }
+            
+            let changedAlarm = self.alarmInfo[ip.row]
+            changedAlarm.isOn = isOn
+            self.coreDataManager.saveContext()
+            print("알람 \(isOn ? "켜짐" : "꺼짐")")
+        }
         
         return cell
     }

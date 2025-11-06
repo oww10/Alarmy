@@ -161,7 +161,7 @@ class EditViewController: UIViewController {
             let selected = storeRepeatDays.contains(i)
             setDayButton(btn, selected: selected)
         }
-
+        
     }
     
     
@@ -189,7 +189,7 @@ class EditViewController: UIViewController {
             alarm.date = date
             alarm.alarmLabel = labelText
             alarm.setValue(repeatDays.map(NSNumber.init(value:)), forKey: "repeatDays")
-
+            
             CoreDataManager.shared.saveContext()
         } else {
             CoreDataManager.shared.createData(date: date, alarmLabel: labelText, repeatDays: repeatDays)
@@ -204,6 +204,6 @@ class EditViewController: UIViewController {
     @objc private func dayButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         setDayButton(sender, selected: sender.isSelected)
-
+        
     }
 }
