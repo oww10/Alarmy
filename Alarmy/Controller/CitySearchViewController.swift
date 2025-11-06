@@ -3,7 +3,8 @@ import SnapKit
 
 class CitySearchViewController: UIViewController {
     
-    let cityData: [(cityName: String, countryName: String, timeZoneID: String)] = WorldClockModel.shared.worldClockData()
+    let allCities: [(cityName: String, countryName: String, timeZoneID: String)] = WorldClockModel.shared.worldClockData()
+    var filterdCities: [(cityName: String, countryName: String, timeZoneID: String)] = []
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -30,6 +31,11 @@ class CitySearchViewController: UIViewController {
         setConstraints()
         setupNavigationBar()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        filterdCities = allCities
+    }
+    
     private func configureUI() {
         view.backgroundColor = .bgColor
         [searchBar, cityTableView].forEach { view.addSubview($0) }
@@ -60,9 +66,32 @@ class CitySearchViewController: UIViewController {
         self.dismiss(animated: true)
     }
 }
+// 검색어에 따른 필러링
+extension CitySearchViewController {
+    private func filterCities(with searchText: String) {
+        if searchText.isEmpty {
+            filterdCities = allCities
+        } else {
+            filterdCities = allCities.filter { city in
+                let isCityMatch = city.cityName.localizedCaseInsensitiveContains(searchText)
+                let isCountryMatch = city.countryName.localizedCaseInsensitiveContains(searchText)
+                return isCityMatch || isCountryMatch
+            }
+        }
+        cityTableView.reloadData()
+    }
+}
+
+
+// 서치바 관련 함수들
 extension CitySearchViewController: UISearchBarDelegate {
+    // 검색어 바뀔 때마다 자동 호출 함수
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterCities(with: searchText)
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: true)
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -72,20 +101,19 @@ extension CitySearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cityData.count
+        return filterdCities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell =  tableView.dequeueReusableCell(withIdentifier: CitySearchCell.id, for: indexPath) as? CitySearchCell else {
             return UITableViewCell()
         }
-        let cityData = self.cityData[indexPath.row]
+        let cityData = self.filterdCities[indexPath.row]
         cell.configure(with: cityData)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true)
     }
-    
     
 }
