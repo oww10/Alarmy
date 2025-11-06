@@ -1,7 +1,6 @@
 
 import UIKit
 import SnapKit
-import AVFoundation
 
 final class TimerViewController: UIViewController{
 
@@ -10,6 +9,9 @@ final class TimerViewController: UIViewController{
     private let notification = TimerNotification()
     private var timer: Timer?
     private var remainingSeconds: Int = 0
+    private var totalSeconds: Int = 0
+    
+    private var endTime: Date?
     
     private var currentState: ViewState = .selectTime{
         didSet{
@@ -23,7 +25,41 @@ final class TimerViewController: UIViewController{
         settingPickerView()
         settingAddTarget()
         currentState = .selectTime
+        
+        sceneState()
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func sceneState(){
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(timerForeground),
+                                               name: UIScene.willEnterForegroundNotification,
+                                               object: nil)
+    }
+    @objc private func timerForeground(){
+        guard let endTime = self.endTime else {
+            return
+        }
+        
+        let now = Date()
+        remainingSeconds = Int(round(endTime.timeIntervalSince(now)))
+        
+        if remainingSeconds > 0 {
+            let totalTimes = totalSeconds - remainingSeconds
+            let progress = CGFloat(totalTimes) / CGFloat(totalSeconds)
+            updateCountdownLabel()
+            startTimer()
+            timerView.startAnimation(duration: TimeInterval(remainingSeconds), initProgress: progress)
+        } else {
+            remainingSeconds = 0
+            updateCountdownLabel()
+            stopTimer()
+        }
+    }
+    
     private func settingPickerView(){
         timerView.pickerView.delegate = self
         timerView.pickerView.dataSource = self
@@ -33,14 +69,16 @@ final class TimerViewController: UIViewController{
         timerView.cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
     @objc private func tappedStartButton(){
-        let totalSeconds = timerModel.totalTimer
+        self.totalSeconds = timerModel.totalTimer
         remainingSeconds = totalSeconds
+        
+        endTime = Date(timeIntervalSinceNow: TimeInterval(totalSeconds))
         
         notification.scheduleNotification(in: TimeInterval(totalSeconds))
         updateCountdownLabel() 
         startTimer()
         
-        timerView.startAnimation(duration: TimeInterval(totalSeconds))
+        timerView.startAnimation(duration: TimeInterval(totalSeconds),initProgress: 0)
     }
     @objc private func tappedCancelButton(){
         notification.cancelNotification()
@@ -57,6 +95,8 @@ final class TimerViewController: UIViewController{
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+        endTime = nil
+        totalSeconds = 0
         currentState = .selectTime
         timerView.stopAnimation()
     }
@@ -75,7 +115,12 @@ final class TimerViewController: UIViewController{
         let minutes = (remainingSeconds % 3600) / 60
         let seconds = (remainingSeconds % 3600) % 60
         
-        timerView.countdownLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        
+        DispatchQueue.main.async {
+            self.timerView.countdownLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        }
+            
+            
     }
     private func updateUIState(){
         switch currentState{
