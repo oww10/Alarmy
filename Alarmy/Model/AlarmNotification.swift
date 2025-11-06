@@ -19,7 +19,7 @@ class AlarmNotification {
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                print("알람 등록 실패")
+                print("알람 등록 실패 \(error)")
             } else {
                 print("알람 등록 성공")
             }

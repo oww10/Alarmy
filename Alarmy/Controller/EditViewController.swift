@@ -31,30 +31,13 @@ class EditViewController: UIViewController {
         configureStack()
         editWithInfo()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        editWithInfo()
-    }
-    
-    
-    
+
     private func configureUI() {
         [mainLabel, picker, repeatLabel, stackView, labelText, textfield]
             .forEach { view.addSubview($0) }
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "취소",
-            style: .plain,
-            target: self,
-            action: #selector(cancelButtonTapped)
-        )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self,action: #selector(cancelButtonTapped))
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "저장",
-            style: .plain,
-            target: self,
-            action: #selector(saveButtonTapped)
-        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
         
         let ap = UINavigationBarAppearance()
         ap.configureWithOpaqueBackground()
@@ -121,6 +104,7 @@ class EditViewController: UIViewController {
         
     }
     
+    // 반복 요일 버튼 스택
     private func configureStack() {
         for (index, button) in dayButtons.enumerated() {
             stackView.addArrangedSubview(button)
@@ -143,13 +127,13 @@ class EditViewController: UIViewController {
         }
     }
     
+    // 편집 화면
     private func editWithInfo() {
         guard let alarm = editedAlarm else { return }
         
         if let pickerDate = alarm.date {
             picker.date = pickerDate
         }
-        
         textfield.text = alarm.alarmLabel
         
         let storeRepeatDays: [Int] = {
@@ -164,7 +148,6 @@ class EditViewController: UIViewController {
         }
         
     }
-    
     
     
     private func setDayButton(_ button: UIButton, selected: Bool) {
@@ -204,7 +187,6 @@ class EditViewController: UIViewController {
             // 기본 켜짐이면 true
             let newAlarm = CoreDataManager.shared.createData(date: date, alarmLabel: labelText, repeatDays: repeatDays, isOn: true)
             let newID = newAlarm.objectID.uriRepresentation().absoluteString
-            AlarmNotification.shared.cancelAlarm(id: newID)
             AlarmNotification.shared.alarmNoti(date: date, id: newID)
         }
 

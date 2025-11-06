@@ -8,8 +8,8 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     
     private let mainLabel = UILabel()
     private let tableView = UITableView()
-    private var alarmInfo: [Alarm] = []
     private let coreDataManager = CoreDataManager.shared
+    private var alarmInfo: [Alarm] = []
     
     
     override func viewDidLoad() {
@@ -27,24 +27,15 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     private func configureUI() {
         view.addSubview(mainLabel)
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "전체삭제",
-            style: .plain,
-            target: self,
-            action: #selector(deleteTapped)
-        )
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "추가",
-            style: .plain,
-            target: self,
-            action: #selector(addTapped)
-        )
-        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "전체삭제", style: .plain, target: self, action: #selector(deleteTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addTapped))
         
         let ap = UINavigationBarAppearance()
         ap.configureWithOpaqueBackground()
         ap.backgroundColor = .systemBackground
+        ap.backgroundColor = .black
+        navigationItem.standardAppearance = ap
+        navigationItem.scrollEdgeAppearance = ap
         
         mainLabel.text = "알람"
         mainLabel.font = UIFont.systemFont(ofSize: 36, weight: .bold)
@@ -53,11 +44,9 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
             $0.leading.equalToSuperview().inset(30)
             $0.top.equalToSuperview().inset(140)
         }
-        
-        
     }
-
-
+    
+    
     
     
     /* ----- 테이블 ----- */
@@ -78,16 +67,13 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     }
     
     
+    
     private func reloadAlarm() {
         alarmInfo = coreDataManager.readData()
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
-
     
-    
-    
+    // 스와이프 삭제
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) {
             [weak self](action, view, completion) in
@@ -109,6 +95,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         return configuration
     }
     
+    // 셀 클릭
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -130,10 +117,9 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     }
     
     
+    // 전체 삭제
     @objc private func deleteTapped() {
         guard !alarmInfo.isEmpty else { return }
-        
-        
         
         let alert = UIAlertController(title: "전체 삭제", message: "모든 항목을 삭제할까요?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
@@ -141,22 +127,9 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
             guard let self = self else { return }
             
             let center = UNUserNotificationCenter.current()
-
-            // (디버그) 현재 대기중 알림 출력
-            center.getPendingNotificationRequests { reqs in
-                print("🧾 BEFORE pending:", reqs.map { "\($0.identifier) -> \($0.trigger!)" })
-                
-                let center = UNUserNotificationCenter.current()
-                  center.removeAllPendingNotificationRequests()   // 대기 중인 알림 다 삭제
-                  center.removeAllDeliveredNotifications()        // 이미 울린 알림도 삭제
-                  print("🧹 모든 알림 삭제 완료")
-                
-            }
+            center.removeAllPendingNotificationRequests()   // 대기 중인 알림 전체 삭제
+            center.removeAllDeliveredNotifications()        // 이미 울린 알림도 삭제
             
-            for alarmObj in self.alarmInfo {
-                let notiID = alarmObj.objectID.uriRepresentation().absoluteString
-                AlarmNotification.shared.cancelAlarm(id: notiID)
-            }
             self.coreDataManager.deleteAllData()
             self.alarmInfo.removeAll()
             self.tableView.reloadData()
@@ -180,8 +153,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         present(nav, animated: true)
     }
     
-    
-    
+
     
 }
 
@@ -217,12 +189,10 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 AlarmNotification.shared.cancelAlarm(id: id)
                 if let date = alarmObj.date {
                     AlarmNotification.shared.alarmNoti(date: date, id: id)
-                    print("알람 스케줄 ON")
                 }
             } else {
                 AlarmNotification.shared.cancelAlarm(id: id)
                 UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
-                print("알람 스케줄 OFF")
             }
         }
         
