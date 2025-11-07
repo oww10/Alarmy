@@ -3,6 +3,8 @@ import SnapKit
 
 class CitySearchViewController: UIViewController {
     
+    weak var delegate: CitySearchDelegate?
+    
     let allCities: [(cityName: String, countryName: String, timeZoneID: String)] = WorldClockModel.shared.worldClockData()
     var filterdCities: [(cityName: String, countryName: String, timeZoneID: String)] = []
     
@@ -113,7 +115,10 @@ extension CitySearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dismiss(animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedCity = self.filterdCities[indexPath.row]
+        delegate?.didSelectCity(city: selectedCity)
+        self.dismiss(animated: true)
     }
     
 }
