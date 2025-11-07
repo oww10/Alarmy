@@ -40,7 +40,6 @@ class CoreDataManager {
         do {
             try context.save()
             NotificationCenter.default.post(name: .init("alarmDidChange"), object: nil)
-            print("저장 성공")
         } catch {
             print("저장 실패:", error)
         }
@@ -66,7 +65,6 @@ class CoreDataManager {
         context.delete(alarm)
         do {
             try context.save()
-            print("스와이프 삭제 성공")
         } catch {
             print("스와이프 삭제 실패")
         }
@@ -79,7 +77,6 @@ class CoreDataManager {
             let all = try context.fetch(request)
             all.forEach { context.delete($0) }
             try context.save()
-            print("전체 삭제 성공")
         } catch {
             print("전체 삭제 실패")
         }

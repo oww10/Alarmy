@@ -27,7 +27,7 @@ class AlarmTableViewCell: UITableViewCell {
         [timeLabel, savedLabel].forEach { vStack.addArrangedSubview($0) }
         
         timeLabel.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
-        timeLabel.font = .systemFont(ofSize: 36, weight: .regular)
+        //timeLabel.font = .systemFont(ofSize: 36, weight: .regular)
         savedLabel.textColor = .lightGray
         savedLabel.font = .systemFont(ofSize: 15, weight: .regular)
         vStack.axis = .vertical
@@ -48,12 +48,34 @@ class AlarmTableViewCell: UITableViewCell {
         //timeLabel.textColor = .white
     }
     
+    func attributedTime(from date: Date) -> NSAttributedString {
+        let fmt = DateFormatter()
+        fmt.locale = Locale(identifier: "ko_KR")
+        fmt.amSymbol = "오전"
+        fmt.pmSymbol = "오후"
+        fmt.dateFormat = "a hh:mm"
+
+        let full = fmt.string(from: date)
+        let bigFont = UIFont.systemFont(ofSize: 40, weight: .regular)
+        let attr = NSMutableAttributedString(
+            string: full,
+            attributes: [.font: bigFont]
+        )
+
+        if let range = full.range(of: fmt.amSymbol) ?? full.range(of: fmt.pmSymbol) {
+            let nsRange = NSRange(range, in: full)
+            let smallFont = UIFont.systemFont(ofSize: 25)
+            attr.addAttributes([
+                .font: smallFont,
+                .baselineOffset: 2 // 오전/오후 글자 살짝 올리기
+            ], range: nsRange)
+        }
+
+        return attr
+    }
+    
     func configure(with alarm: Alarm) {
-        // 시간을 오전/오후 단위로 포맷
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "a hh:mm"
-        timeLabel.text = formatter.string(from: alarm.date ?? Date())
+        timeLabel.attributedText = attributedTime(from: alarm.date ?? Date())
         savedLabel.text = alarm.alarmLabel
         toggle.isOn = alarm.isOn
         
