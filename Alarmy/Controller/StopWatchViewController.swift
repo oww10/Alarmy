@@ -6,6 +6,7 @@ final class StopWatchViewController: UIViewController{
     
     private let stopWatch = StopWatch()
     private var isPlay: Bool = false
+    private var backgroundDate: Date?
     
     private let timeLabel: UILabel = {
         let label = UILabel()
@@ -44,6 +45,34 @@ final class StopWatchViewController: UIViewController{
         super.viewDidLoad()
         configureUI()
         setConstraints()
+        sceneState()
+    }
+    // Observer 해제
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // 백그라운드로 진입할 때 호출
+    private func sceneState() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(moveToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(moveToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    @objc
+    private func moveToBackground() {
+        if isPlay {
+            backgroundDate = Date()
+        }
+    }
+    @objc
+    private func moveToForeground() {
+        guard isPlay, let storedBackgroundData = backgroundDate else { return }
+        let foregroundDate = Date()
+        let timeElapsed = foregroundDate.timeIntervalSince(storedBackgroundData)
+        stopWatch.counter += timeElapsed
+        updateMainTimer()
+        backgroundDate = nil
     }
     
     private func configureUI() {
@@ -93,7 +122,8 @@ extension StopWatchViewController {
     @objc
     private func startPauseTime() {
         if !isPlay {
-            stopWatch.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateMainTimer), userInfo: nil, repeats: true)
+            stopWatch.timer = Timer.scheduledTimer(
+                timeInterval: 0.01, target: self, selector: #selector(updateMainTimer), userInfo: nil, repeats: true)
             RunLoop.current.add(stopWatch.timer, forMode: RunLoop.Mode.common)
             isPlay = true
             changeButton(startButton, backgroundColor: .stopBGColor, title: "중단", titleColor: .stopTextColor)
