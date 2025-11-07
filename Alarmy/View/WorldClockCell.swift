@@ -9,7 +9,7 @@ class WorldClockCell: UITableViewCell {
         let label = UILabel()
         label.text = "3:00"
         label.textColor = .textColor
-        label.font = .monospacedDigitSystemFont(ofSize: 70, weight: .thin)
+        label.font = .monospacedDigitSystemFont(ofSize: 50, weight: .light)
         label.textAlignment = .right
         return label
     }()
@@ -17,7 +17,7 @@ class WorldClockCell: UITableViewCell {
         let label = UILabel()
         label.text = "샌프란시스코"
         label.textColor = .textColor
-        label.font = .monospacedDigitSystemFont(ofSize: 25, weight: .thin)
+        label.font = .monospacedDigitSystemFont(ofSize: 30, weight: .semibold)
         label.textAlignment = .left
         return label
     }()
@@ -29,6 +29,9 @@ class WorldClockCell: UITableViewCell {
         label.textAlignment = .right
         return label
     }()
+    
+    private var hStack = UIStackView()
+    private var rStack = UIStackView()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,21 +45,28 @@ class WorldClockCell: UITableViewCell {
     }
     private func configureUI() {
         self.backgroundColor = .bgColor
-        [timeLable, cityLable, amLabel].forEach { addSubview($0) }
+        [hStack].forEach { contentView.addSubview($0) }
+        [amLabel, timeLable].forEach { rStack.addArrangedSubview($0) }
+        [cityLable, rStack].forEach { hStack.addArrangedSubview($0) }
+        
+        hStack.axis = .horizontal
+        hStack.distribution = .fillEqually
+        hStack.spacing = 12
+        rStack.axis = .horizontal
+        rStack.distribution = .fill
+        rStack.spacing = 6
+        rStack.alignment = .center
+        amLabel.transform = CGAffineTransform(translationX: 0, y: 6)
     }
     
     private func setConstraints() {
-        timeLable.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+        rStack.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
+            $0.centerX.equalToSuperview()
         }
-        cityLable.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.top.equalTo(timeLable.snp.centerY)
-        }
-        amLabel.snp.makeConstraints {
-            $0.trailing.equalTo(timeLable.snp.leading)
-            $0.top.equalTo(timeLable.snp.centerY)
+        hStack.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.centerX.centerY.equalToSuperview()
         }
     }
     
@@ -68,7 +78,7 @@ class WorldClockCell: UITableViewCell {
         
         let timeFormatter = DateFormatter()
         timeFormatter.timeZone = timeZone
-        timeFormatter.dateFormat = "h:mm"
+        timeFormatter.dateFormat = "hh:mm"
         let timeString = timeFormatter.string(from: now)
         self.timeLable.text = timeString
         

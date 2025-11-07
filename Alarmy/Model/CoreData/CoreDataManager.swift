@@ -39,6 +39,7 @@ class CoreDataManager {
         alarm.repeatDays = repeatDays
         alarm.isOn = isOn
 
+
         do {
             try context.save()
             NotificationCenter.default.post(name: .init("alarmDidChange"), object: nil)

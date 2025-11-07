@@ -13,7 +13,7 @@ final class TimerView: UIView {
     private let timerLabel: UILabel = {
         let label = UILabel()
         label.text = "타이머"
-        label.font = .systemFont(ofSize: 44, weight: .heavy)
+        label.font = .systemFont(ofSize: 36, weight: .heavy)
         label.textColor = .textColor
         return label
     }()
@@ -98,7 +98,7 @@ final class TimerView: UIView {
     }
     private func cofigureLayout(){
         timerLabel.snp.makeConstraints{ make in
-            make.top.equalTo(self.safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(self.safeAreaLayoutGuide).inset(20)
             make.leading.equalToSuperview().inset(20)
         }
         pickerView.snp.makeConstraints{ make in
