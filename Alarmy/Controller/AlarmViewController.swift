@@ -14,7 +14,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .bgColor
         configureUI()
         configureTable()
         alarmInfo = coreDataManager.readData()
@@ -29,11 +29,13 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "전체삭제", style: .plain, target: self, action: #selector(deleteTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(addTapped))
+        self.navigationItem.rightBarButtonItem?.tintColor = .selectBGColor
+        
         
         let ap = UINavigationBarAppearance()
         ap.configureWithOpaqueBackground()
         ap.backgroundColor = .systemBackground
-        ap.backgroundColor = .black
+        ap.backgroundColor = .bgColor
         navigationItem.standardAppearance = ap
         navigationItem.scrollEdgeAppearance = ap
         
@@ -41,8 +43,8 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         mainLabel.font = UIFont.systemFont(ofSize: 36, weight: .bold)
         mainLabel.textColor = .white
         mainLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(30)
-            $0.top.equalToSuperview().inset(140)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
     }
     
@@ -57,7 +59,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         tableView.register(AlarmTableViewCell.self, forCellReuseIdentifier: AlarmTableViewCell.identifier)
         
         tableView.separatorColor = UIColor(red: 92/255.0, green: 92/255.0, blue: 92/255.0, alpha: 0.5)
-        tableView.backgroundColor = .black
+        tableView.backgroundColor = .bgColor
         tableView.rowHeight = 80
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(10)
@@ -171,7 +173,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AlarmTableViewCell.identifier, for: indexPath) as? AlarmTableViewCell else { return .init() }
         
         cell.selectionStyle = .none
-        cell.backgroundColor = .black
+        cell.backgroundColor = .bgColor
         let alarm = alarmInfo[indexPath.row]
         cell.configure(with: alarm)
         

@@ -10,7 +10,7 @@ final class WorldClockViewController: UIViewController {
     private let worldClockLabel: UILabel = {
         let label = UILabel()
         label.text = "세계 시간"
-        label.font = .systemFont(ofSize: 44, weight: .heavy)
+        label.font = .systemFont(ofSize: 36, weight: .heavy)
         label.textColor = .textColor
         return label
     }()
@@ -20,6 +20,8 @@ final class WorldClockViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(WorldClockCell.self, forCellReuseIdentifier: WorldClockCell.id)
+        tableView.separatorColor = UIColor(red: 92/255.0, green: 92/255.0, blue: 92/255.0, alpha: 0.5)
+        tableView.rowHeight = 80
         return tableView
     }()
     
@@ -41,11 +43,12 @@ final class WorldClockViewController: UIViewController {
     
     private func setConstraints() {
         worldClockLabel.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.leading.equalToSuperview().inset(20)
         }
         worldClockTV.snp.makeConstraints {
-            $0.top.equalTo(worldClockLabel.snp.bottom)
+            $0.top.equalTo(worldClockLabel.snp.bottom).offset(20)
+            //$0.top.equalTo(worldClockLabel.snp.bottom)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
@@ -53,11 +56,11 @@ final class WorldClockViewController: UIViewController {
     private func setupNavigationBar() {
         let addButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(didTappedAdd))
         self.navigationItem.rightBarButtonItem = addButton
-        self.navigationItem.rightBarButtonItem?.tintColor = .selectBGColor
+       self.navigationItem.rightBarButtonItem?.tintColor = .selectBGColor
         
         let deleteAllButton = UIBarButtonItem(title: "전체 삭제", style: .plain, target: self, action: #selector(didTappedDeleteAll))
         self.navigationItem.leftBarButtonItem = deleteAllButton
-        self.navigationItem.leftBarButtonItem?.tintColor = .selectBGColor
+        //self.navigationItem.leftBarButtonItem?.tintColor = .selectBGColor
     }
 }
 // 데이터 불러오기
@@ -108,6 +111,7 @@ extension WorldClockViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let cityData = selectedClockData[indexPath.row]
+        cell.selectionStyle = .none
         cell.configure(with: cityData)
         return cell
     }
