@@ -169,8 +169,14 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .none
         cell.backgroundColor = .black
-        cell.configure(with: alarmInfo[indexPath.row])
+        let alarm = alarmInfo[indexPath.row]
+        cell.configure(with: alarm)
         
+        // 초기 색상
+        cell.timeLabel.textColor = alarm.isOn
+             ? .white
+             : UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
+
         // 토글 스위치
         cell.switchChanged = { [weak self, weak tableView, weak cell] isOn in
             guard let self,
@@ -189,10 +195,12 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 AlarmNotification.shared.cancelAlarm(id: id)
                 if let date = alarmObj.date {
                     AlarmNotification.shared.alarmNoti(date: date, id: id)
+                    cell.timeLabel.textColor = .white
                 }
             } else {
                 AlarmNotification.shared.cancelAlarm(id: id)
                 UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
+                cell.timeLabel.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
             }
         }
         

@@ -9,6 +9,8 @@ class AlarmTableViewCell: UITableViewCell {
     
     let timeLabel = UILabel()
     private let toggle = UISwitch()
+    let savedLabel = UILabel()
+    private let vStack = UIStackView()
     var switchChanged: ((Bool) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -21,15 +23,19 @@ class AlarmTableViewCell: UITableViewCell {
     }
     
     func configureCell() {
-        [timeLabel, toggle].forEach { contentView.addSubview($0) }
+        [toggle, vStack].forEach { contentView.addSubview($0) }
+        [timeLabel, savedLabel].forEach { vStack.addArrangedSubview($0) }
         
-        timeLabel.textColor = .white
+        timeLabel.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
         timeLabel.font = .systemFont(ofSize: 36, weight: .regular)
-        timeLabel.snp.makeConstraints {
+        savedLabel.textColor = .lightGray
+        savedLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        vStack.axis = .vertical
+        vStack.distribution = .fill
+        vStack.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
-        
         toggle.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
@@ -39,6 +45,7 @@ class AlarmTableViewCell: UITableViewCell {
     
     @objc private func didChangeSwitch(_ sender: UISwitch) {
         switchChanged?(sender.isOn)
+        //timeLabel.textColor = .white
     }
     
     func configure(with alarm: Alarm) {
@@ -47,6 +54,7 @@ class AlarmTableViewCell: UITableViewCell {
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "a hh:mm"
         timeLabel.text = formatter.string(from: alarm.date ?? Date())
+        savedLabel.text = alarm.alarmLabel
         toggle.isOn = alarm.isOn
         
     }
