@@ -6,6 +6,8 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
     
+    private let worldClockEntity = "Alarm"
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Alarmy")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -79,6 +81,71 @@ class CoreDataManager {
             print("전체 삭제 성공")
         } catch {
             print("전체 삭제 실패")
+        }
+    }
+}
+
+// 세계 시간 관련 함수 추가
+extension CoreDataManager {
+    
+    func saveWorldData(city: (cityName: String, countryName: String, timeZoneID: String)) {
+        let context = persistentContainer.viewContext
+        
+        guard let entity = NSEntityDescription.entity(forEntityName: worldClockEntity, in: context) else { return }
+        let newClock = NSManagedObject(entity: entity, insertInto: context)
+        
+        newClock.setValue(city.timeZoneID, forKey: "timeZoneID")
+        newClock.setValue(city.cityName, forKey: "cityName")
+            
+        do {
+            try context.save()
+            print("저장 성공")
+        } catch {
+            print("저장 실패")
+        }
+    }
+    func loadWorldData() -> [(cityName: String, countryName: String, timeZoneID: String)] {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: worldClockEntity)
+        do {
+            let result = try context.fetch(fetchRequest)
+            return result.compactMap { obj in
+                guard let id = obj.value(forKey: "timeZoneID") as? String,
+                      let city = obj.value(forKey: "cityName") as? String else { return nil }
+                return (cityName: city, countryName: "", timeZoneID: id)
+            }
+        } catch {
+            print("세계 시간 불러오기 실패")
+            return []
+        }
+    }
+    func deleteAllWorldData() {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: worldClockEntity)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+            print("세계시간 전체삭제 완료")
+        } catch {
+            print("세계시간 전체삭제 실패")
+        }
+    }
+    func deleteWorldData(with timeZoneID: String){
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: worldClockEntity)
+
+        fetchRequest.predicate = NSPredicate(format: "timeZoneID == %@", timeZoneID)
+        do {
+            let result = try context.fetch(fetchRequest)
+            for object in result {
+                context.delete(object as! NSManagedObject)
+            }
+            try context.save()
+            print("세계시간 개별삭제 성공")
+        } catch {
+            print("세계시간 개별삭제 실패")
         }
     }
 }

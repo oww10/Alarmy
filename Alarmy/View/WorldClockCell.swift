@@ -60,8 +60,23 @@ class WorldClockCell: UITableViewCell {
         }
     }
     
-    func configure() {
+    func configure(with data: (cityName: String, countryName: String, timeZoneID: String)) {
+        guard let timeZone = TimeZone(identifier: data.timeZoneID) else { return }
+        let now = Date()
         
+        self.cityLable.text = data.cityName
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.timeZone = timeZone
+        timeFormatter.dateFormat = "h:mm"
+        let timeString = timeFormatter.string(from: now)
+        self.timeLable.text = timeString
+        
+        let ampmFormatter = DateFormatter()
+        ampmFormatter.timeZone = timeZone
+        ampmFormatter.dateFormat = "a"
+        let ampmString = ampmFormatter.string(from: now)
+        self.amLabel.text = ampmString
     }
     
 }
