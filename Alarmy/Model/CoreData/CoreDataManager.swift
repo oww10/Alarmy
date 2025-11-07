@@ -6,7 +6,7 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
     
-    private let worldClockEntity = "Alarm"
+    private let worldClockEntity = "WorldClock"
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Alarmy")
