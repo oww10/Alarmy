@@ -2,7 +2,7 @@
 import UIKit
 import SnapKit
 
-class WorldClockViewController: UIViewController {
+final class WorldClockViewController: UIViewController {
     
     let coreDataManager = CoreDataManager.shared
     var selectedClockData: [(cityName: String, countryName: String, timeZoneID: String)] = []
@@ -95,7 +95,6 @@ extension WorldClockViewController: CitySearchDelegate {
 
 // 테이블뷰 델리게이트, 데이터소스
 extension WorldClockViewController: UITableViewDelegate, UITableViewDataSource {
-    // 테이블뷰 셀 크기
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
@@ -112,12 +111,21 @@ extension WorldClockViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: cityData)
         return cell
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let delete = selectedClockData[indexPath.row]
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = selectedClockData[indexPath.row]
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) {
+            [weak self] (ation, view, completionHandler) in
+            guard let self = self else { return }
+            
             coreDataManager.deleteWorldData(with: delete.timeZoneID)
             selectedClockData.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            completionHandler(true)
         }
+        deleteAction.image = UIImage(systemName: "trash")
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
     }
 }

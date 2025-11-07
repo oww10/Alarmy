@@ -102,9 +102,7 @@ extension CoreDataManager {
             
         do {
             try context.save()
-            print("저장 성공")
         } catch {
-            print("저장 실패")
         }
     }
     func loadWorldData() -> [(cityName: String, countryName: String, timeZoneID: String)] {
@@ -118,7 +116,6 @@ extension CoreDataManager {
                 return (cityName: city, countryName: "", timeZoneID: id)
             }
         } catch {
-            print("세계 시간 불러오기 실패")
             return []
         }
     }
@@ -130,9 +127,7 @@ extension CoreDataManager {
         do {
             try context.execute(deleteRequest)
             try context.save()
-            print("세계시간 전체삭제 완료")
         } catch {
-            print("세계시간 전체삭제 실패")
         }
     }
     func deleteWorldData(with timeZoneID: String){
@@ -146,9 +141,7 @@ extension CoreDataManager {
                 context.delete(object as! NSManagedObject)
             }
             try context.save()
-            print("세계시간 개별삭제 성공")
         } catch {
-            print("세계시간 개별삭제 실패")
         }
     }
 }
