@@ -4,6 +4,9 @@ import SnapKit
 
 class WorldClockViewController: UIViewController {
     
+    let coreDataManager = CoreDataManager.shared
+    var selectedClockData: [(cityName: String, countryName: String, timeZoneID: String)] = []
+    
     private let worldClockLabel: UILabel = {
         let label = UILabel()
         label.text = "세계 시간"
@@ -25,6 +28,10 @@ class WorldClockViewController: UIViewController {
         configureUI()
         setConstraints()
         setupNavigationBar()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadWorldData()
     }
     
     private func configureUI() {
@@ -53,20 +60,39 @@ class WorldClockViewController: UIViewController {
         self.navigationItem.leftBarButtonItem?.tintColor = .selectBGColor
     }
 }
+// 데이터 불러오기
+extension WorldClockViewController {
+    private func loadWorldData() {
+        self.selectedClockData = coreDataManager.loadWorldData()
+        self.worldClockTV.reloadData()
+    }
+}
+
 // 내비게이션바 버튼 실행 함수
 extension WorldClockViewController {
     @objc
     private func didTappedAdd() {
+        let citySearchViewC = CitySearchViewController()
+        citySearchViewC.delegate = self
 
-        let citySearchVC = UINavigationController(rootViewController: CitySearchViewController())
+        let citySearchVC = UINavigationController(rootViewController: citySearchViewC)
         citySearchVC.modalPresentationStyle = .pageSheet
         self.present(citySearchVC, animated: true, completion: nil)
     }
     @objc
     private func didTappedDeleteAll() {
-        print("전체삭제버튼 눌림")
+        coreDataManager.deleteAllWorldData()
+        loadWorldData()
     }
 }
+// Delegate 채택 및 저장
+extension WorldClockViewController: CitySearchDelegate {
+    func didSelectCity(city data: (cityName: String, countryName: String, timeZoneID: String)) {
+        coreDataManager.saveWorldData(city: data)
+        loadWorldData()
+    }
+}
+
 // 테이블뷰 델리게이트, 데이터소스
 extension WorldClockViewController: UITableViewDelegate, UITableViewDataSource {
     // 테이블뷰 셀 크기
@@ -75,14 +101,23 @@ extension WorldClockViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        return selectedClockData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell =  tableView.dequeueReusableCell(withIdentifier: WorldClockCell.id, for: indexPath) as? WorldClockCell else {
             return UITableViewCell()
         }
-        cell.configure()
+        let cityData = selectedClockData[indexPath.row]
+        cell.configure(with: cityData)
         return cell
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let delete = selectedClockData[indexPath.row]
+            coreDataManager.deleteWorldData(with: delete.timeZoneID)
+            selectedClockData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
