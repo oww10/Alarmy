@@ -106,13 +106,13 @@ final class TimerView: UIView {
             make.centerX.equalToSuperview()
         }
         cancelButton.snp.makeConstraints{ make in
-            make.top.equalTo(pickerView.snp.bottom).offset(50)
-            make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(pickerView.snp.bottom).offset(17)
+            make.leading.equalToSuperview().inset(30)
             make.width.height.equalTo(90)
         }
         startButton.snp.makeConstraints{ make in
             make.top.equalTo(cancelButton)
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(30)
             make.width.height.equalTo(90)
         }
         

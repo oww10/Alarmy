@@ -3,19 +3,20 @@ import UIKit
 
 
 class MainViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
         view.backgroundColor = .bgColor
-        
+       
     }
-
+    
     private func setupTabs(){
         let worldClockVC = UINavigationController(rootViewController: WorldClockViewController())
         let alarmVC = UINavigationController(rootViewController: AlarmViewController())
         let stopWatchVC = UINavigationController(rootViewController: StopWatchViewController())
         let timerVC = UINavigationController(rootViewController: TimerViewController())
+        let appearance = UITabBarAppearance()
         
         worldClockVC.tabBarItem = UITabBarItem(
             title: "세계 시간",
@@ -36,6 +37,12 @@ class MainViewController: UITabBarController {
             title: "타이머",
             image: UIImage(systemName: "timer"),
             selectedImage: UIImage(systemName: "timer.fill"))
+        
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .black
+        tabBar.tintColor = .orange
+        tabBar.unselectedItemTintColor = .gray
+        tabBar.standardAppearance = appearance
         
         self.viewControllers = [worldClockVC, alarmVC, stopWatchVC, timerVC]
     }

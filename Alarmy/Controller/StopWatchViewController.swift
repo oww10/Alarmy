@@ -16,7 +16,7 @@ final class StopWatchViewController: UIViewController{
         label.textAlignment = .center
         return label
     }()
-    private lazy var startButton: UIButton = {
+    lazy var startButton: UIButton = {
         let button = UIButton()
         button.setTitle("시작", for: .normal)
         button.setTitleColor(.startTextColor, for: .normal)
@@ -25,7 +25,7 @@ final class StopWatchViewController: UIViewController{
         button.addTarget(self, action: #selector(startPauseTime), for: .touchUpInside)
         return button
     }()
-    private lazy var resetButton: UIButton = {
+    lazy var resetButton: UIButton = {
         let button = UIButton()
         button.setTitle("재설정", for: .normal)
         button.setTitleColor(.cancelTextColor, for: .normal)
