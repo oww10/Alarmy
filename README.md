@@ -4,9 +4,10 @@
 # 📱 프로젝트 소개
 
 
+
 **프로젝트 이름** : Alarmy </br>
 **와이어 프레임** : </br>
-<img width="517" height="714" alt="스크린샷 2025-11-07 오후 2 10 04" src="https://github.com/user-attachments/assets/647f1725-bf91-40ae-8412-906dce7dda73" />
+<img width="5532" height="3198" alt="알라미" src="https://github.com/user-attachments/assets/7ef7f76b-4051-44dc-9dab-1538e81db576" />
 
 # 팀원 소개
 | 이름   | 이름       | 이름      |
