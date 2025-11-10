@@ -11,6 +11,7 @@ class WorldClockModel {
         var uniqueCheck: Set<String> = []       // 중복 확인용
         
         for tzID in TimeZone.knownTimeZoneIdentifiers {
+            if tzID.contains("Coyhaique") { continue }
             guard let timeZone = TimeZone(identifier: tzID) else { continue }
             
             let parts = tzID.split(separator: "/")
