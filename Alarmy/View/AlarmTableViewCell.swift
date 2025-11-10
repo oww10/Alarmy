@@ -8,8 +8,8 @@ class AlarmTableViewCell: UITableViewCell {
     static let identifier = "AlarmTableViewCell"
     
     let timeLabel = UILabel()
-    private let toggle = UISwitch()
     let savedLabel = UILabel()
+    private let toggle = UISwitch()
     private let vStack = UIStackView()
     var switchChanged: ((Bool) -> Void)?
     
@@ -22,24 +22,27 @@ class AlarmTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell() {
+    private func configureCell() {
         [toggle, vStack].forEach { contentView.addSubview($0) }
         [timeLabel, savedLabel].forEach { vStack.addArrangedSubview($0) }
         
         timeLabel.textColor = UIColor(red: 115/255.0, green: 115/255.0, blue: 115/255.0, alpha: 1.0)
         savedLabel.textColor = .lightGray
-        savedLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        savedLabel.font = .systemFont(ofSize: 13, weight: .regular)
         vStack.axis = .vertical
         vStack.distribution = .fill
         vStack.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
+            $0.top.leading.equalToSuperview().inset(10)
+                $0.trailing.equalTo(toggle.snp.leading).offset(-12) // ← 이거 중요!!
+                $0.bottom.equalToSuperview().inset(8)
         }
+
         toggle.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
         toggle.addTarget(self, action: #selector(didChangeSwitch), for: .valueChanged)
+   
     }
     
     @objc private func didChangeSwitch(_ sender: UISwitch) {

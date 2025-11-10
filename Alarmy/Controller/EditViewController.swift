@@ -5,7 +5,7 @@ import UIKit
 import SnapKit
 import UserNotifications
 
-class EditViewController: UIViewController {
+final class EditViewController: UIViewController {
     private let mainLabel = UILabel()
     private lazy var picker = UIDatePicker()
     private let repeatLabel = UILabel()

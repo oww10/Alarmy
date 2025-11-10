@@ -4,7 +4,7 @@ import SnapKit
 import UserNotifications
 
 
-class AlarmViewController: UIViewController, EditViewControllerDelegate {
+final class AlarmViewController: UIViewController, EditViewControllerDelegate {
     
     private let mainLabel = UILabel()
     private let tableView = UITableView()
@@ -60,7 +60,7 @@ class AlarmViewController: UIViewController, EditViewControllerDelegate {
         
         tableView.separatorColor = UIColor(red: 92/255.0, green: 92/255.0, blue: 92/255.0, alpha: 0.5)
         tableView.backgroundColor = .bgColor
-        tableView.rowHeight = 80
+        tableView.rowHeight = 100
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.top.equalTo(mainLabel.snp.bottom).offset(20)
@@ -177,6 +177,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         let alarm = alarmInfo[indexPath.row]
         cell.configure(with: alarm)
         
+      
         // 초기 색상
         cell.timeLabel.textColor = alarm.isOn
              ? .white
